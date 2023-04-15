@@ -1,0 +1,33 @@
+:root {
+  --color-standard: #fff;
+  --color-standard-border: #cdcdcd;
+  --color-standard-hover: #f3f2f1;
+  --color-container-bg: #f5f5f5;
+  --color-primary: #0078d4;
+  --color-primary-light: #c7e0f4;
+  --color-primary-text: #fff;
+  --color-primary-hover: #106ebe;
+  --color-danger: #dc3545;
+  --color-danger-text: #fff;
+  --color-danger-hover: #bb2d3b;
+  --color-disabled: #f5f5f5;
+  --color-disabled-text: #bfbfbf;
+  --color-link: #0078d4;
+  --color-link-hover: #004578;
+  --color-shadow: rgba(0, 0, 0, 0.15);
+  --color-mask-bg: rgba(0, 0, 0, 0.4);
+  --color-standard-text: #262626;
+  --color-secondary-text: #595959;
+  --font-size-xs: 0.75rem; /* 12px */
+  --font-size-sm: 0.875rem; /* 14px */
+  --font-size-md: 1rem; /* 16px */
+  --font-size-lg: 1.25rem; /* 20px */
+  --font-size-xl: 1.5rem; /* 24px */
+  --font-size-2xl: 2.5rem; /* 40px */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semi-bold: 600;
+  --font-weight-bold: 700;
+  --wdith-main: 320px;
+  --z-index-message: 1200;
+}
