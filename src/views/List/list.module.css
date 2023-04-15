@@ -1,3 +1,12 @@
 .list {
   height: 100%;
+
+  &Inner {
+    margin: 16px auto;
+    width: 400px;
+  }
+
+  &Item {
+    font-weight: var(--font-weight-semi-bold);
+  }
 }

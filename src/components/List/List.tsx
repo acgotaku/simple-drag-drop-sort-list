@@ -36,7 +36,7 @@ const List: React.FC<IListProps> = ({
               if (renderItem) {
                 return (
                   <Item
-                    key={index}
+                    key={item.key ?? index}
                     className={itemClassName}
                     draggable={draggable}
                     dragStartHandler={event => dragStartHandler(event, index)}
@@ -51,7 +51,7 @@ const List: React.FC<IListProps> = ({
               } else {
                 return (
                   <Item
-                    key={index}
+                    key={item.key ?? index}
                     className={itemClassName}
                     draggable={draggable}
                     dragStartHandler={event => dragStartHandler(event, index)}

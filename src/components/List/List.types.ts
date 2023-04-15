@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export type ItemType = AnyLiteral | string;
 
 export interface IListProps<T = ItemType> {
   dataSource?: Array<T>;
   children?: React.ReactNode;
-  setList?: (list: Array<T>) => void;
-  renderItem?: (item: T, index: number) => React.ReactNode;
+  setList?: (list: AnyArray) => void;
+  renderItem?: (item: any, index: number) => React.ReactNode;
   virtualScroll?: boolean;
   draggable?: boolean;
   className?: string;
