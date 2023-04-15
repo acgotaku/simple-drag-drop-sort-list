@@ -1,5 +1,5 @@
 .list {
-  height: 100%;
+  padding: 32px;
 
   &Inner {
     margin: 16px auto;
@@ -8,5 +8,24 @@
 
   &Item {
     font-weight: var(--font-weight-semi-bold);
+  }
+
+  &Grid {
+    margin: 16px auto;
+    width: 528px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px;
+    border: none;
+
+    &Item {
+      width: 120px;
+      height: 60px;
+      border: 1px solid var(--color-standard-border);
+
+      &:last-child {
+        border-bottom: 1px solid var(--color-standard-border);
+      }
+    }
   }
 }
