@@ -5,7 +5,7 @@ const TIMEOUT = 300;
 
 interface DraggableOptions {
   dataSource: AnyArray;
-  updateData: (data: AnyArray) => void;
+  updateData?: (data: AnyArray) => void;
   draggable?: boolean;
   containerRef?: React.RefObject<HTMLElement>;
   onDragStart?: () => void;
@@ -15,6 +15,7 @@ interface DraggableOptions {
 
 type UseDraggable = (options: DraggableOptions) => {
   sortedData: AnyArray;
+  recordRect: () => void;
   dragStartHandler: (
     event: React.DragEvent<HTMLElement>,
     index: number
@@ -41,7 +42,9 @@ export const useDraggable: UseDraggable = ({
   const dragOverItem = useRef<number>(0);
 
   useEffect(() => {
-    setSortedData(dataSource);
+    if (dataSource.length) {
+      setSortedData(dataSource);
+    }
   }, [dataSource]);
 
   const recordRect = useCallback(() => {
@@ -121,7 +124,7 @@ export const useDraggable: UseDraggable = ({
     [onDragEnter]
   );
   const dragEndHandler = useCallback(() => {
-    updateData(sortedData);
+    updateData?.(sortedData);
     onDragEnd?.();
   }, [sortedData, updateData, onDragEnd]);
   const dragOverHandler = useCallback((event: React.DragEvent<HTMLElement>) => {
@@ -137,6 +140,7 @@ export const useDraggable: UseDraggable = ({
 
   return {
     sortedData,
+    recordRect,
     dragStartHandler,
     dragOverHandler,
     dragEnterHandler,
