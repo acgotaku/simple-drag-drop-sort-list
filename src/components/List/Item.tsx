@@ -37,12 +37,7 @@ const Item: React.FC<IListItemProps> = ({
     dropHandler
   ]);
   return (
-    <li
-      className={cls(styles.item, className)}
-      draggable={draggable}
-      data-id={id}
-      {...dragProps}
-    >
+    <li className={cls(styles.item, className)} data-id={id} {...dragProps}>
       {children}
     </li>
   );
