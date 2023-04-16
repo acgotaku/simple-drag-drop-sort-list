@@ -111,7 +111,7 @@ export const useDraggable: UseDraggable = ({
   );
   const dragEnterHandler = useCallback(
     (index: number) => {
-      if (dragItem.current !== index && dragOverItem.current !== index) {
+      if (dragOverItem.current !== index) {
         dragOverItem.current = index;
         const newData = deepClone(copyData.current);
         const dragData = newData[dragItem.current];
