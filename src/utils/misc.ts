@@ -33,6 +33,58 @@ export const isSymbol = (val: unknown): val is symbol =>
 export const isPlainObject = (val: unknown): val is object =>
   toTypeString(val) === '[object Object]';
 
+function looseCompareArrays(a: any[], b: any[]) {
+  if (a.length !== b.length) return false;
+  let equal = true;
+  for (let i = 0; equal && i < a.length; i++) {
+    equal = looseEqual(a[i], b[i]);
+  }
+  return equal;
+}
+
+export function looseEqual(a: any, b: any): boolean {
+  if (a === b) return true;
+  let aValidType = isDate(a);
+  let bValidType = isDate(b);
+  if (aValidType || bValidType) {
+    return aValidType && bValidType ? a.getTime() === b.getTime() : false;
+  }
+  aValidType = isSymbol(a);
+  bValidType = isSymbol(b);
+  if (aValidType || bValidType) {
+    return a === b;
+  }
+  aValidType = Array.isArray(a);
+  bValidType = Array.isArray(b);
+  if (aValidType || bValidType) {
+    return aValidType && bValidType ? looseCompareArrays(a, b) : false;
+  }
+  aValidType = isObject(a);
+  bValidType = isObject(b);
+  if (aValidType || bValidType) {
+    if (!aValidType || !bValidType) {
+      return false;
+    }
+    const aKeysCount = Object.keys(a).length;
+    const bKeysCount = Object.keys(b).length;
+    if (aKeysCount !== bKeysCount) {
+      return false;
+    }
+    for (const key in a) {
+      const aHasKey = hasOwnProperty(a, key);
+      const bHasKey = hasOwnProperty(b, key);
+      if (
+        (aHasKey && !bHasKey) ||
+        (!aHasKey && bHasKey) ||
+        !looseEqual(a[key], b[key])
+      ) {
+        return false;
+      }
+    }
+  }
+  return String(a) === String(b);
+}
+
 export function deepClone<T>(val: T): T {
   if (!isObject(val)) {
     return val;
