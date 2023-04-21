@@ -12,7 +12,6 @@ interface DraggableOptions {
 
 type UseDraggable = (options: DraggableOptions) => {
   sortedData: AnyArray;
-  recordRect: () => void;
   dragStartHandler: (
     event: React.DragEvent<HTMLElement>,
     index: number
@@ -42,23 +41,11 @@ export const useDraggable: UseDraggable = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dataSource]);
 
-  const recordRect = useCallback(() => {
-    if (draggable && containerRef?.current) {
-      Array.from(containerRef.current.querySelectorAll('[data-id]')).forEach(
-        async node => {
-          const dom = node as HTMLElement;
-          const key = dom.dataset.id as string;
-          const rect = dom.getBoundingClientRect();
-          if (key) {
-            prevRects.current[key] = rect;
-          }
-        }
-      );
-    }
-  }, [draggable, containerRef]);
-
   useEffect(() => {
     if (draggable && containerRef?.current) {
+      const offsetParent = containerRef.current.offsetParent || document.body;
+      console.log(offsetParent);
+      const parentRect = offsetParent.getBoundingClientRect();
       Array.from(containerRef.current.querySelectorAll('[data-id]')).forEach(
         async node => {
           const dom = node as HTMLElement;
@@ -66,6 +53,9 @@ export const useDraggable: UseDraggable = ({
           const prevRect = prevRects.current[key];
           if (key) {
             const rect = dom.getBoundingClientRect();
+            // remove scroll offset
+            rect.x = rect.x - parentRect.x;
+            rect.y = rect.y - parentRect.y;
             if (prevRect) {
               const dy = prevRect.y - rect.y;
               const dx = prevRect.x - rect.x;
@@ -101,9 +91,8 @@ export const useDraggable: UseDraggable = ({
       event.dataTransfer.setData('text/plain', index.toString());
       dragItem.current = index;
       copyData.current = deepClone(sortedData);
-      recordRect();
     },
-    [sortedData, recordRect]
+    [sortedData]
   );
   const dragEnterHandler = useCallback((index: number) => {
     if (dragOverItem.current !== index) {
@@ -131,7 +120,6 @@ export const useDraggable: UseDraggable = ({
 
   return {
     sortedData,
-    recordRect,
     dragStartHandler,
     dragOverHandler,
     dragEnterHandler,
